@@ -1,0 +1,33 @@
+# build steps
+# I had to build from source since my basement server distro is so old
+
+# as super user, install build tools and add xonotic user
+    sudo apt install build-essential autoconf libgmp3-dev zlib1g-dev libjpeg-turbo8-dev
+    sudo adduser xonotic
+
+# as xonotic user
+sudo su - xonotic
+# in home directory
+curl -L -o !/xonotic-0.8.6.zip https://dl.unvanquished.net/share/xonotic/release/xonotic-0.8.6.zip
+unzip xonotic-0.8.6.zip; mkdir ~/dist; mv xonotic-0.8.6.zip dist
+cd ~/Xonotic
+
+# build binary
+make server
+# this creates ~/Xonotic/xonotic-local-dedicated
+
+rm -rf .xonotic/
+mdkir -p ~/.xonotic/data
+
+# this file is overwritten from service/server.cfg at service startup
+# so edits should be made to service/server.cfg
+cp ~/Xonotic/server/server.cfg ~/.xonotic/data/server.cfg
+
+# deploy using mage
+
+
+
+
+
+
+

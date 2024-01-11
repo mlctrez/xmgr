@@ -1,0 +1,35 @@
+
+# useful urls
+https://xonotic.org/tools/cacs/
+
+# raw cvar data
+https://xonotic.org/static/data/xonotic/cvarlist.txt
+
+sv_curl_defaulturl "xxxxxx" // todo
+developer -1 // todo
+sv_termsofservice_url "xxxx" // completed
+sv_public 1 // completed
+seta sv_hostname_base "[300] North America | Votable Insta | Live Flags + Grapplehook" // maybe todo
+hostname "$sv_hostname_base" // completed
+sv_adminnick "✶[300]✶" // todo
+net_address 0.0.0.0 // completed
+port 26000 // completed
+g_antilag 2 // completed
+sv_maxrate 150000 // completed
+sys_ticrate 0.0166667 // completed
+sv_eventlog 1 // todo
+log_file "300.log" // completed
+maxplayers 24 // completed
+
+rcon_secure 2 // todo
+rcon_secure_challengetimeout 25 // todo
+rcon_password "<your password>" // todo
+
+
+
+
+
+
+
+
+

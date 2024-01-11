@@ -1,0 +1,88 @@
+help
+Server console commands:
+  adminmsg: Send an admin message to a client directly
+  allready: Ends warmup and starts the match
+  allspec: Force all players to spectate
+  animbench: Benchmark model animation (LAGS)
+  anticheat: Create an anticheat report for a client
+  bbox: Print detailed information about world size
+  bot_cmd: Control and send commands to bots
+  cointoss: Flip a virtual coin and give random result
+  database: Extra controls of the serverprogs database
+  defer_clear: Clear all queued defer commands for a specific client
+  defer_clear_all: Clear all queued defer commands for all clients
+  delrec: Delete race time record for a map
+  effectindexdump: Dump list of effects from code and effectinfo.txt
+  extendmatchtime: Increase the timelimit value incrementally
+  gametype: Simple command to change the active gametype
+  gettaginfo: Get specific information about a weapon model
+  gotomap: Simple command to switch to another map
+  lockteams: Disable the ability for players to switch or enter teams
+  make_mapinfo: Automatically rebuild mapinfo files
+  moveplayer: Change the team/status of a player
+  nospectators: Automatically remove spectators from a match
+  printstats: Dump eventlog player stats and other score information
+  radarmap: Generate a radar image of the map
+  reducematchtime: Decrease the timelimit value incrementally
+  resetmatch: Soft restart the game without changing teams; goes back to warmup if enabled
+  setbots: Adjust how many bots are in the match
+  shuffleteams: Randomly move players to different teams
+  stuffto: Send a command to be executed on a client
+  trace: Various debugging tools with tracing
+  unlockteams: Enable the ability for players to switch or enter teams
+  warp: Choose different level in campaign
+
+Banning commands:
+  ban: Ban an IP address or a range of addresses (like 1.2.3)
+  banlist: List all existing bans
+  kickban: Disconnect a client and ban it at the same time
+  mute: Disallow a client from talking by muting them
+  playban: Force to spectate a client permanently
+  unban: Remove an existing ban
+  unmute: Unmute a client
+  unvoteban: Remove an existing voting ban
+  unplayban: Remove an existing forced to spectate ban
+  voteban: Disallow a client from voting
+
+Common networked commands:
+  cvar_changes: Prints a list of all changed server cvars
+  cvar_purechanges: Prints a list of all changed gameplay cvars
+  editmob: Modifies a monster or all monsters
+  info: Request for unique server information set up by admin
+  ladder: Get information about top players if supported
+  lsmaps: List maps which can be used with the current game mode
+  printmaplist: Display full server maplist reply
+  rankings: Print information about rankings
+  records: Print records for the current gametype
+  teamstatus: Show information about player and team scores
+  time: Print different formats/readouts of time
+  timein: Resume the game from being paused with a timeout
+  timeout: Call a timeout which pauses the game for certain amount of time unless unpaused
+  vote: Request an action to be voted upon by players
+  who: Display detailed client information about all players
+
+Generic commands shared by all programs:
+  addtolist: Add a string to a cvar
+  bufstr_get: Examine a string buffer object
+  cvar_localchanges: Print locally changed cvars
+  dumpcommands: Dump all commands on the program to <program>_cmd_dump.txt
+  dumpitems: Dump all items to the console
+  dumpnotifs: Dump all notifications into notifications_dump.cfg
+  dumpturrets: Dump all turrets into turrets_dump.cfg
+  dumpweapons: Dump all turrets into weapons_dump.cfg
+  findat: Search through entities for matching origin
+  findent: Search through entities for matching classname
+  maplist: Automatic control of maplist
+  mx: Send a matrix command
+  nextframe: Execute the given command next frame of this VM
+  qc_curl: Queries a URL
+  removefromlist: Remove a string from a cvar
+  restartnotifs: Re-initialize all notifications
+  rpn: RPN calculator
+  runtest: Run unit tests
+  settemp: Temporarily set a value to a cvar which is restored later
+  settemp_restore: Restore all cvars set by settemp command
+  version: Print the current version
+
+Usage: sv_cmd <command>, where possible commands are listed above.
+For help about a specific command, type sv_cmd help <command>

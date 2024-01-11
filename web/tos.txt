@@ -1,0 +1,62 @@
+** xonotic.mlctrez.com TERMS OF SERVICE **
+
+Last Updated: 2023-01-11
+
+Welcome to xonotic.mlctrez.com!
+
+Please carefully read the following terms of service before accessing or using the Xonotic server.
+
+** 1. ACCEPTANCE OF TERMS **
+By accessing or using the Xonotic server, you agree to comply with and be bound by these Terms. If you do not agree to these Terms, please do not use the Server.
+
+** 2. RULES OF CONDUCT **
+Users of the Xonotic server are expected to adhere to the following rules of conduct:
+
+2.1. ** Respect **:
+Treat other users with respect and courtesy. Do not engage in any form of harassment, discrimination, or offensive behavior.
+
+2.2. ** Fair Play **:
+Play the game fairly and do not use cheats, hacks, or exploits. Respect the integrity of the game and its community.
+
+2.3. ** No Unauthorized Access **:
+Do not attempt to gain unauthorized access to the Server or interfere with its operation.
+
+2.4. ** Content Restrictions **:
+Do not upload, transmit, or share any content that is illegal, harmful, or infringes on the rights of others.
+
+2.5. ** Privacy **:
+Respect the privacy of other users. Do not collect or disclose personal information without consent.
+
+2.6. ** Compliance with Laws **:
+Users must comply with all applicable laws and regulations while using the Server.
+
+** 3. ACCOUNTS AND ACCESS **
+
+3.1. ** Account Responsibility **:
+Users are responsible for maintaining the confidentiality of their account information and are liable for all activities associated with their account.
+
+3.2. ** Account Banning **:
+The Server administrators reserve the right to ban any user account for violations of these Terms or disruptive behavior.
+
+** 4. INTELLECTUAL PROPERTY **
+
+4.1. ** Ownership **:
+The Server and its content are the property of their respective owners. Users may not reproduce, distribute, or create derivative works without permission.
+
+4.2. ** User Content **:
+By submitting content to the Server, users grant the administrators a non-exclusive, royalty-free license to use, reproduce, and distribute that content.
+
+** 5. DISCLAIMER OF WARRANTY **
+The Server is provided "as is" without any warranty, express or implied. The administrators do not guarantee the accuracy, reliability, or availability of the Server.
+
+** 6. LIMITATION OF LIABILITY **
+To the extent permitted by law, the administrators of the Xonotic server shall not be liable for any direct, indirect, incidental, special, or consequential damages resulting from the use or inability to use the Server.
+
+** 7. CHANGES TO TERMS **
+The administrators reserve the right to modify or revise these Terms at any time. Users are responsible for regularly reviewing the Terms. Continued use of the Server after changes constitutes acceptance of the modified Terms.
+
+---------------------------------------------------------
+
+By using the Xonotic server, you agree to these Terms. If you have any questions or concerns, please contact the administrators at xonotic@mlctrez.com.
+
+Thank you for using the Xonotic server responsibly and enjoy your gaming experience!
