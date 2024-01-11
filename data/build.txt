@@ -8,7 +8,7 @@
 # as xonotic user
 sudo su - xonotic
 # in home directory
-curl -L -o !/xonotic-0.8.6.zip https://dl.unvanquished.net/share/xonotic/release/xonotic-0.8.6.zip
+curl -L -o xonotic-0.8.6.zip https://dl.unvanquished.net/share/xonotic/release/xonotic-0.8.6.zip
 unzip xonotic-0.8.6.zip; mkdir ~/dist; mv xonotic-0.8.6.zip dist
 cd ~/Xonotic
 
