@@ -1,21 +1,31 @@
 # build steps
-# I had to build from source since my basement server distro is so old
 
-# as super user, install build tools and add xonotic user
-    sudo apt install build-essential autoconf libgmp3-dev zlib1g-dev libjpeg-turbo8-dev
-    sudo adduser xonotic
+# I had to build from source since the distribution binary required a glibc version that I don't have
 
-# as xonotic user
+
+# as super user, install build dependencies according to the wiki page
+# at  https://gitlab.com/xonotic/xonotic/-/wikis/Repository_Access ( next line is for Ubuntu )
+sudo apt-get install autoconf automake build-essential curl git libtool libgmp-dev libjpeg-turbo8-dev libsdl2-dev libxpm-dev xserver-xorg-dev zlib1g-dev unzip zip
+
+# create a separate user, xonotic for running the server
+sudo adduser xonotic
+
+# switch to that user
 sudo su - xonotic
-# in home directory
-curl -L -o xonotic-0.8.6.zip https://dl.unvanquished.net/share/xonotic/release/xonotic-0.8.6.zip
-unzip xonotic-0.8.6.zip; mkdir ~/dist; mv xonotic-0.8.6.zip dist
-cd ~/Xonotic
 
-# build binary
-make server
-# this creates ~/Xonotic/xonotic-local-dedicated
+# as the xonotic user, clone the xonotic source and update
+cd ~/
+git clone https://gitlab.com/xonotic/xonotic.git  # download main repo
+cd ~/xonotic
+./all update -l best  # download all other repos (data + game logic, maps, etc.)
 
+
+# build the dedicated server
+./all compile dedicated
+# this creates ~/xonotic/darkplaces/darkplaces-dedicated which should be copied to
+# ~/xonotic/xonotic-local-dedicated
+
+# create the server data directory
 rm -rf .xonotic/
 mdkir -p ~/.xonotic/data
 
@@ -23,11 +33,4 @@ mdkir -p ~/.xonotic/data
 # so edits should be made to service/server.cfg
 cp ~/Xonotic/server/server.cfg ~/.xonotic/data/server.cfg
 
-# deploy using mage
-
-
-
-
-
-
-
+# deploy service using mage. see magefiles/mage.go

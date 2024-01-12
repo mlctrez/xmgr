@@ -59,6 +59,7 @@ func (svc *Service) Start(s service.Service) (err error) {
 		return err
 	}
 	_ = os.Setenv("PATH", os.Getenv("PATH")+":"+dir)
+	_ = os.Setenv("LD_LIBRARY_PATH", filepath.Join(dir, "d0_blind_id", ".libs"))
 
 	if err = svc.startNats(); err != nil {
 		return err
