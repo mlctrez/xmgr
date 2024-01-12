@@ -1,0 +1,7 @@
+
+# map naming
+1. The map name displayed in the game does not match the filename of the map. When a client connects to download a map,
+   does the server provide the file name from which the map was loaded?
+2. Same question for specifying maps in g_maplist. Does the map name need to match the name of the .mapinfo file
+   contained within the map zip file?  i.e. .xonotic/data/dlcache/oldnexuiz_revdm1.pk3 contains maps/revdm1.mapinfo
+3. How does the 300 server have a customized message of the day screen? Coding changes?

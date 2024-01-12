@@ -9,6 +9,8 @@ import (
 	"github.com/nats-io/nats.go"
 	"net/http"
 	"os"
+	"path/filepath"
+	"strings"
 )
 
 type Api struct {
@@ -28,6 +30,7 @@ func New(log service.Logger, runner *runner.Runner, natsConn *nats.Conn) *Api {
 	}
 	web.Routes(engine)
 	a := &Api{log: log, runner: runner, natsConn: natsConn, engine: engine}
+	engine.GET("/xonotic-assets/:path", a.Assets)
 
 	return a
 }
@@ -36,6 +39,22 @@ func (a *Api) Handler() http.Handler {
 	return a.engine
 }
 
-func (a *Api) Help(ctx *gin.Context) {
-	_ = a.natsConn.Publish("xonotic.stdin", []byte("help\n"))
+func (a *Api) Assets(context *gin.Context) {
+	assetPath := context.Param("path")
+	if !strings.HasSuffix(assetPath, ".pk3") {
+		context.Status(http.StatusNotFound)
+		_ = a.log.Info(context.RemoteIP(), "invalid asset path", assetPath)
+		return
+	}
+
+	open, err := os.Open(filepath.Join(os.Getenv("XONOTIC_ASSETS"), assetPath))
+	if err != nil {
+		context.Status(http.StatusNotFound)
+		_ = a.log.Error("open ", err.Error())
+		return
+	}
+	defer func(open *os.File) { _ = open.Close() }(open)
+	context.Header("Content-Type", "application/zip")
+	context.Header("Content-Disposition", "attachment; filename="+assetPath)
+	context.File(open.Name())
 }

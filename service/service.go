@@ -1,6 +1,7 @@
 package service
 
 import (
+	"bytes"
 	"context"
 	_ "embed"
 	"errors"
@@ -10,6 +11,7 @@ import (
 	"github.com/mlctrez/xmgr/web/api"
 	"github.com/nats-io/nats-server/v2/server"
 	"github.com/nats-io/nats.go"
+	"html/template"
 	"net"
 	"net/http"
 	"os"
@@ -43,15 +45,6 @@ func xonoticDir() (string, error) {
 		return "", err
 	}
 	return filepath.Join(dir, "Xonotic"), nil
-}
-
-func serverConfig() (string, error) {
-	dir, err := os.UserHomeDir()
-	if err != nil {
-		return "", err
-	}
-	// TODO: handle other OS locations
-	return filepath.Join(dir, ".xonotic", "data", "server.cfg"), nil
 }
 
 func (svc *Service) Start(s service.Service) (err error) {
@@ -89,24 +82,6 @@ func (svc *Service) Start(s service.Service) (err error) {
 	return svc.startHttp()
 }
 
-//go:embed server.cfg
-var configData []byte
-
-func (svc *Service) writeServerCfg() (err error) {
-	var configFile string
-	if configFile, err = serverConfig(); err != nil {
-		return err
-	}
-	var create *os.File
-	if create, err = os.Create(configFile); err != nil {
-		return err
-	}
-	if _, err = create.Write(configData); err != nil {
-		return err
-	}
-	return create.Close()
-}
-
 func (svc *Service) Stop(s service.Service) (err error) {
 	_ = svc.Log().Info("stopping")
 
@@ -131,6 +106,42 @@ func (svc *Service) Stop(s service.Service) (err error) {
 	return nil
 }
 
+//go:embed server.cfg
+var serverCfg []byte
+
+func (svc *Service) writeServerCfg() (err error) {
+
+	var home string
+	home, err = os.UserHomeDir()
+	if err != nil {
+		return err
+	}
+
+	// TODO: handle locations on other operating systems
+	configFile := filepath.Join(home, ".xonotic", "data", "server.cfg")
+	var create *os.File
+	if create, err = os.Create(configFile); err != nil {
+		return err
+	}
+	buff := bytes.NewBuffer(serverCfg)
+	if os.Getenv("RCON_PASSWORD") != "" {
+		err = rconTemplate.Execute(buff, map[string]string{"RconPassword": os.Getenv("RCON_PASSWORD")})
+		if err != nil {
+			return err
+		}
+	}
+	if _, err = create.Write(buff.Bytes()); err != nil {
+		return err
+	}
+	return create.Close()
+}
+
+var rconTemplate = template.Must(template.New("rcon_settings").Parse(`
+rcon_secure 2
+rcon_secure_challengetimeout 25
+rcon_password "{{.RconPassword}}"
+`))
+
 func (svc *Service) startNats() (err error) {
 	if svc.natsServer, err = server.NewServer(svc.natsOptions()); err != nil {
 		return err
@@ -141,6 +152,8 @@ func (svc *Service) startNats() (err error) {
 		svc.natsServer.Shutdown()
 		return errors.New("unable to start nats server")
 	}
+
+	_ = svc.Log().Info("nats url ", svc.natsServer.ClientURL())
 
 	if svc.natsConn, err = nats.Connect("", nats.InProcessServer(svc.natsServer)); err != nil {
 		svc.natsServer.Shutdown()
@@ -199,7 +212,7 @@ func (svc *Service) stopHttp() error {
 func (svc *Service) natsOptions() *server.Options {
 	return &server.Options{
 		NoSigs: true,
-		Port:   -1,
-		Host:   "127.0.0.1",
+		Port:   26002,
+		Host:   "0.0.0.0",
 	}
 }
