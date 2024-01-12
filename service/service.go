@@ -44,7 +44,7 @@ func xonoticDir() (string, error) {
 	if err != nil {
 		return "", err
 	}
-	return filepath.Join(dir, "Xonotic"), nil
+	return filepath.Join(dir, "xonotic"), nil
 }
 
 func (svc *Service) Start(s service.Service) (err error) {

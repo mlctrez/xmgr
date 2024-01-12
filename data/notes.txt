@@ -1,6 +1,8 @@
 
 # useful urls
 https://xonotic.org/tools/cacs/
+https://www.cataboligne.org/extra/qcmanual.html
+https://gitlab.com/xonotic/xonotic/-/wikis/Repository_Access
 
 # raw cvar data
 https://xonotic.org/static/data/xonotic/cvarlist.txt
