@@ -1,7 +1,6 @@
 package service
 
 import (
-	"bytes"
 	"context"
 	_ "embed"
 	"errors"
@@ -70,7 +69,8 @@ func (svc *Service) Start(s service.Service) (err error) {
 		_ = svc.Log().Info("NATS ", msg.Subject, " ", strings.TrimSpace(string(msg.Data)))
 	})
 
-	cmd := exec.Command("xonotic-local-dedicated", "+serverconfig", "server.cfg")
+	//cmd := exec.Command("xonotic-local-dedicated", "+serverconfig", "server.cfg")
+	cmd := exec.Command("./all", "run", "dedicated")
 	cmd.Dir = dir
 
 	svc.runner = runner.New("xonotic", cmd, svc.natsConn)
@@ -108,12 +108,31 @@ func (svc *Service) Stop(s service.Service) (err error) {
 }
 
 //go:embed server.cfg
-var serverCfg []byte
+var serverCfg string
 
 func (svc *Service) writeServerCfg() (err error) {
 
+	if os.Getenv("XONOTIC_HOSTNAME") == "" {
+		os.Setenv("XONOTIC_HOSTNAME", "local.mlctrez.com")
+	}
+	if os.Getenv("ADDRESS") == "" {
+		os.Setenv("ADDRESS", "127.0.0.1")
+	}
+	if os.Getenv("PORT") == "" {
+		os.Setenv("PORT", "26000")
+	}
+	data := map[string]string{}
+	for _, attr := range []string{"XONOTIC_HOSTNAME", "ADDRESS", "PORT"} {
+		data[attr] = os.Getenv(attr)
+	}
+
 	var home string
 	home, err = os.UserHomeDir()
+	if err != nil {
+		return err
+	}
+
+	parse, err := template.New("server_cfg").Parse(serverCfg)
 	if err != nil {
 		return err
 	}
@@ -124,24 +143,14 @@ func (svc *Service) writeServerCfg() (err error) {
 	if create, err = os.Create(configFile); err != nil {
 		return err
 	}
-	buff := bytes.NewBuffer(serverCfg)
-	if os.Getenv("RCON_PASSWORD") != "" {
-		err = rconTemplate.Execute(buff, map[string]string{"RconPassword": os.Getenv("RCON_PASSWORD")})
-		if err != nil {
-			return err
-		}
-	}
-	if _, err = create.Write(buff.Bytes()); err != nil {
+
+	err = parse.Execute(create, data)
+	if err != nil {
 		return err
 	}
+
 	return create.Close()
 }
-
-var rconTemplate = template.Must(template.New("rcon_settings").Parse(`
-rcon_secure 2
-rcon_secure_challengetimeout 25
-rcon_password "{{.RconPassword}}"
-`))
 
 func (svc *Service) startNats() (err error) {
 	if svc.natsServer, err = server.NewServer(svc.natsOptions()); err != nil {

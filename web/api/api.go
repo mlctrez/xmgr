@@ -31,6 +31,7 @@ func New(log service.Logger, runner *runner.Runner, natsConn *nats.Conn) *Api {
 	web.Routes(engine)
 	a := &Api{log: log, runner: runner, natsConn: natsConn, engine: engine}
 	engine.GET("/xonotic-assets/:path", a.Assets)
+	engine.POST("/stats/submit", a.SubmitStats)
 
 	return a
 }
@@ -57,4 +58,14 @@ func (a *Api) Assets(context *gin.Context) {
 	context.Header("Content-Type", "application/zip")
 	context.Header("Content-Disposition", "attachment; filename="+assetPath)
 	context.File(open.Name())
+}
+
+func (a *Api) SubmitStats(context *gin.Context) {
+
+	data, err := context.GetRawData()
+	if err != nil {
+		return
+	}
+	_ = a.log.Info(string(data))
+
 }
